@@ -9,40 +9,44 @@
 \S4method{apply}{IntervalMatrix}(X, MARGIN, FUN)
 }
 \arguments{
-\item{X}{a matrix of interval-valued data.}
+\item{X}{A matrix of interval-valued data stored as
+an \code{IntervalMatrix} object.}
 
-\item{MARGIN}{a numeric value giving the direction which the function will be applied over.
+\item{MARGIN}{A single numeric value giving the direction which the function
+will be applied over. In this case, only two different options
+are allowed:
 \itemize{
-\item \code{1}: the function will be applied by rows.
-\item \code{2}: the function will be applied by columns.}}
+\item \code{1}: The function will be applied by rows.
+\item \code{2}: The function will be applied by columns.
+}}
 
-\item{FUN}{the function to be applied.}
+\item{FUN}{The function to be applied over the selected interval-valued
+matrix margins.}
 }
 \value{
-Returns the numeric vector or the list of interval-valued data obtained
-by applying the selected function to margins of an interval-valued data matrix.
+This function returns the numeric vector or the list of interval-valued data
+attained by applying the selected function to the specified margin (rows or
+columns) of an interval-valued matrix. Therefore, this function always
+returns either a \code{numeric} or either an \code{IntervalList} object,
+respectively.
 }
 \description{
-This function returns the numeric vector or the list of interval-valued data obtained
-by applying a function to margins of an interval-valued data matrix.
+This function allows to apply a function over the
+rows or columns of an interval-valued matrix.
 }
 \examples{
-data <- matrix(c(0, 2, 0, 4, 1, 3, 3, 9), 2, 4, byrow = TRUE)
-m <- IntervalMatrix(data)
+## Some apply() examples
+## IntervalMatrix definition
+m <- IntervalMatrix(matrix(c(0, 1, 2, 3, 0, 3, 4, 9), 2, 4))
+## Calculate sample Aumann means by rows and columns
+## These code lines return IntervalList objects
 apply(m, 1, mean)
 apply(m, 2, mean)
+## Calculate sample Fréchet variance by rows and columns
+## These code lines return numeric vectors
 apply(m, 1, var)
 apply(m, 2, var)
 }
-\seealso{
-Other IntervalMatrix-method: 
-\code{\link{IntervalMatrix-class}},
-\code{\link{IntervalMatrix}},
-\code{\link{ivd2likert}()},
-\code{\link{ivd2vas}()},
-\code{\link{show}()}
-}
 \author{
-Jose Garcia Garcia \email{garciagarjose@uniovi.es}
+José García-García \email{garciagarjose@uniovi.es}
 }
-\concept{IntervalMatrix-method}

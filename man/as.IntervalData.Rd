@@ -4,38 +4,35 @@
 \name{as.IntervalData}
 \alias{as.IntervalData}
 \alias{as.IntervalData,numeric-method}
-\title{Convert an object to \code{IntervalData} class}
+\title{Convert a real number into a degenerate interval}
 \usage{
 \S4method{as.IntervalData}{numeric}(object)
 }
 \arguments{
-\item{object}{a single real number.}
+\item{object}{A single real number stored as a single \code{numeric} object.}
 }
 \value{
-Returns an object of class \code{\linkS4class{IntervalData}}.
+This function returns a degenerate interval saved as an object
+of class \code{IntervalData}.
 }
 \description{
-This function coerce a real number to an object of \code{IntervalData} class.
+This function allows to coerce a real number stored as a single
+\code{numeric} object to a degenerate interval formed only by this real
+number saved as an \code{IntervalData} instance.
+}
+\details{
+Single real numbers could be seen as particular cases of interval-valued
+data where each interval's lower and upper bounds are equal or,
+alternatively, its spread is zero.
 }
 \examples{
-as.IntervalData(1)
+## Transform a single real-valued number into an interval
+## In particular, degenerate interval {1} is defined.
+i <- as.IntervalData(1); i
 }
 \seealso{
-Other IntervalData-method: 
-\code{\link{IntervalData-class}},
-\code{\link{IntervalData}},
-\code{\link{arithmetic}},
-\code{\link{distance}()},
-\code{\link{ivd2likert}()},
-\code{\link{ivd2vas}()},
-\code{\link{plot}()},
-\code{\link{show}()}
-
-Other conversion: 
-\code{\link{as.IntervalList}()}
+Other coercion function is \code{\link{as.IntervalList}()}.
 }
 \author{
-Jose Garcia Garcia \email{garciagarjose@uniovi.es}
+José García-García \email{garciagarjose@uniovi.es}
 }
-\concept{IntervalData-method}
-\concept{conversion}

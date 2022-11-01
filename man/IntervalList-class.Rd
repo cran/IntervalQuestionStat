@@ -3,14 +3,18 @@
 \docType{class}
 \name{IntervalList-class}
 \alias{IntervalList-class}
-\title{S4 class representing a list of interval-valued data}
+\title{S4 class representing a list of intervals}
 \description{
-S4 class representing a list of interval-valued data
+S4 class representing a list of intervals
 }
 \section{Slots}{
 
 \describe{
-\item{\code{.Data}:}{The data part, which is an object of class 'list'.}}
+\item{\code{mid}:}{A vector of real numbers saved as a \code{numeric}
+object specifying the mid-points of the intervals.}
+\item{\code{spr}:}{A vector of real numbers saved as a \code{numeric}
+object specifying the spreads of the intervals.}
+}
 }
 
 \examples{
@@ -18,18 +22,12 @@ showClass("IntervalList")
 showMethods(classes = "IntervalList")
 }
 \seealso{
-Other IntervalList-method: 
-\code{\link{IntervalList}},
-\code{\link{as.IntervalList}()},
-\code{\link{cov}()},
-\code{\link{ivd2likert}()},
-\code{\link{ivd2vas}()},
-\code{\link{mean}()},
-\code{\link{plot}()},
-\code{\link{sum}()},
-\code{\link{var}()}
+Objects of \code{IntervalList} class should be created through
+\code{\link{IntervalList}()} function. Besides \code{IntervalList} class,
+the \pkg{IntervalQuestionStat} package also incorporates
+\code{\link{IntervalData-class}} and \code{\link{IntervalMatrix-class}}
+for dealing with interval-valued data in R environment.
 }
 \author{
-Jose Garcia Garcia \email{garciagarjose@uniovi.es}
+José García-García \email{garciagarjose@uniovi.es}
 }
-\concept{IntervalList-method}

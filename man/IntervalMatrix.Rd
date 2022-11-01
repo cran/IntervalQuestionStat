@@ -7,44 +7,55 @@
 IntervalMatrix(data, type = 1)
 }
 \arguments{
-\item{data}{a matrix or data frame containing the interval-valued data information.}
+\item{data}{A \code{matrix} or \code{data.frame} with the
+interval-valued information.}
 
-\item{type}{a number specifying the characterisation that is being used.
-Only four options are allowed:
+\item{type}{A single \code{numeric} value specifying both the order
+and the characterization that is being used for storing
+interval-valued information on \code{data} argument.
+Only the following four options are allowed:
 \itemize{
-\item \code{1}: inf/sup-characterisation is used variable by variable (default).
-\item \code{2}: mid/spr-characterisation is used variable by variable.
-\item \code{3}: all infimums are followed by all supremums in the same variable order.
-\item \code{4}: all mid-points are followed by all spreads in the same variable order.
+\item \code{1}: The \emph{inf/sup}-characterization is
+used variable by variable (default).
+\item \code{2}: The \emph{mid/spr}-characterization is
+used variable by variable.
+\item \code{3}: All the supremums follow all the
+infimums in the same variable order.
+\item \code{4}: All the spreads follow all the
+mid-points in the same variable order.
 }}
 }
 \value{
-Object of class \code{\linkS4class{IntervalMatrix}}.
+This function returns the created \code{IntervalMatrix} object.
 }
 \description{
-For convenience, objects of class \code{IntervalMatrix}
+For convenience, \code{IntervalMatrix} objects or instances
 may be created with this function.
 }
 \examples{
-data <- matrix(c(0, 2, 0, 4, 1, 3, 3, 9), 2, 4, byrow = TRUE)
-IntervalMatrix(data)
-data <- matrix(c(1, 1, 2, 2, 2, 1, 6, 3), 2, 4, byrow = TRUE)
-IntervalMatrix(data, 2)
-data <- matrix(c(0, 0, 2, 4, 1, 3, 3, 9), 2, 4, byrow = TRUE)
-IntervalMatrix(data, 3)
-data <- matrix(c(1, 2, 1, 2, 2, 6, 1, 3), 2, 4, byrow = TRUE)
-IntervalMatrix(data, 4)
+## The following code illustrates four different ways to define
+## the same matrix of intervals through IntervalMatrix() function.
+## In particular, the following 2x2 interval-valued matrix is defined:
+## | [0, 2] [0, 4] | = | [1 -+ 1] [2 -+ 2] |
+## | [1, 3] [3, 9] | = | [2 -+ 1] [6 -+ 3] |
 
+## Using inf/sup characterization variable by variable
+data1 <- matrix(c(0, 1, 2, 3, 0, 3, 4, 9), 2, 4)
+matrix1 <- IntervalMatrix(data1); matrix1
+## Using mid/spr characterization variable by variable
+data2 <- matrix(c(1, 2, 1, 1, 2, 6, 2, 3), 2, 4)
+matrix2 <- IntervalMatrix(data2, type = 2); matrix2
+## Storing all the infimums first and then all the supremums
+data3 <- matrix(c(0, 1, 0, 3, 2, 3, 4, 9), 2, 4)
+matrix3 <- IntervalMatrix(data3, type = 3); matrix3
+## Storing all the mid-points first and then all the spreads
+data4 <- matrix(c(1, 2, 2, 6, 1, 1, 2, 3), 2, 4)
+matrix4 <- IntervalMatrix(data4, type = 4); matrix4
 }
 \seealso{
-Other IntervalMatrix-method: 
-\code{\link{IntervalMatrix-class}},
-\code{\link{apply}()},
-\code{\link{ivd2likert}()},
-\code{\link{ivd2vas}()},
-\code{\link{show}()}
+For other interval-valued data definition use \code{\link{IntervalData}()}
+and \code{\link{IntervalList}()} functions.
 }
 \author{
-Jose Garcia Garcia \email{garciagarjose@uniovi.es}
+José García-García \email{garciagarjose@uniovi.es}
 }
-\concept{IntervalMatrix-method}

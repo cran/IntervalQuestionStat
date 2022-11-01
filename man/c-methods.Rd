@@ -2,23 +2,28 @@
 % Please edit documentation in R/methods-c.R
 \name{c}
 \alias{c}
-\alias{c,IntervalData-method}
-\alias{c,IntervalList-method}
-\title{Combine interval-valued data into an interval-valued data list}
+\alias{c,IntervalDataOrIntervalList-method}
+\title{Combine \code{IntervalData} and \code{IntervalList} objects}
 \usage{
-\S4method{c}{IntervalData}(x, ...)
-\S4method{c}{IntervalList}(x, ...)
+\S4method{c}{IntervalDataOrIntervalList}(x, ...)
 }
 \arguments{
-\item{x}{an \code{IntervalData} or \code{IntervalList} object.}
+\item{x}{A single nonempty compact real interval or a unique list of
+of this family stored as an \code{IntervalData} object or an
+\code{IntervalList} instance, respectively.}
 
-\item{...}{additional arguments.}
+\item{...}{Additional single nonempty compact real intervals or lists of
+intervals of this family stored as \code{IntervalData} or
+\code{IntervalList} instances, respectively.}
 }
 \value{
-An interval-valued data list with the combination of given elements
+This function returns the list of intervals obtained after the combination
+of the given interval-valued elements saved as an\code{IntervalList} object.
 }
 \description{
-This function combines its arguments into a object of class \code{IntervalList}.
+This function allows to combine single intervals and lists of intervals,
+that is, \code{IntervalData} and \code{IntervalList} objects, and then
+store the attained result as an \code{IntervalList} instance.
 }
 \examples{
 ## Combine 'IntervalData' objects
@@ -38,5 +43,5 @@ list4 <- c(list1, i1)
 list4
 }
 \author{
-Jose Garcia Garcia \email{garciagarjose@uniovi.es}
+José García-García \email{garciagarjose@uniovi.es}
 }

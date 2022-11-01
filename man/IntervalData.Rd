@@ -7,41 +7,41 @@
 IntervalData(a1, a2, type = 1)
 }
 \arguments{
-\item{a1}{a number specifying the infimum or the mid-point of the interval.}
+\item{a1}{A single real number specifying either the infimum or either
+the mid-point of the interval stored as a unique \code{numeric}
+value.}
 
-\item{a2}{a number specifying the supremum or the spread of the interval.}
+\item{a2}{A single real number specifying either the supremum or either
+the spread of the interval stored as a unique \code{numeric}
+value.}
 
-\item{type}{a number specifying the characterisation that is being used.
+\item{type}{A single real number specifying the characterization that
+is being used stored as a unique \code{numeric} value.
 Only two options are allowed:
 \itemize{
-\item \code{1}: inf/sup-characterisation is used (default).
-\item \code{2}: mid/spr-characterisation is used.
+\item \code{1}: The \emph{inf/sup}-characterization
+is used (default).
+\item \code{2}: The \emph{mid/spr}-characterization is used.
 }}
 }
 \value{
-Object of class \code{\linkS4class{IntervalData}}.
+This function returns the created \code{IntervalData} object.
 }
 \description{
-For convenience, objects of class \code{IntervalData}
+For convenience, \code{IntervalData} objects or instances
 may be created with this function.
 }
 \examples{
-IntervalData(0, 2)
-IntervalData(1, 1, 2)
-
+## The following code generates the same interval through
+## both inf/sup and mid/spr characterizations, respectively.
+## In particular, interval [0, 2] = [1 -+ 1] is defined.
+i1 <- IntervalData(a1 = 0, a2 = 2, type = 1); i1
+i2 <- IntervalData(a1 = 1, a2 = 1, type = 2); i2
 }
 \seealso{
-Other IntervalData-method: 
-\code{\link{IntervalData-class}},
-\code{\link{arithmetic}},
-\code{\link{as.IntervalData}()},
-\code{\link{distance}()},
-\code{\link{ivd2likert}()},
-\code{\link{ivd2vas}()},
-\code{\link{plot}()},
-\code{\link{show}()}
+For other interval-valued data definition use \code{\link{IntervalList}()}
+and \code{\link{IntervalMatrix}()} functions.
 }
 \author{
-Jose Garcia Garcia \email{garciagarjose@uniovi.es}
+José García-García \email{garciagarjose@uniovi.es}
 }
-\concept{IntervalData-method}

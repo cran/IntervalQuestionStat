@@ -3,14 +3,18 @@
 \docType{class}
 \name{IntervalMatrix-class}
 \alias{IntervalMatrix-class}
-\title{S4 class representing a matrix of interval-valued data}
+\title{S4 class representing a matrix of intervals}
 \description{
-S4 class representing a matrix of interval-valued data
+S4 class representing a matrix of intervals
 }
 \section{Slots}{
 
 \describe{
-\item{\code{.Data}:}{The data part, which is an object of class 'matrix'.}}
+\item{\code{mid}:}{A matrix of real numbers saved as a \code{matrix}
+object specifying the mid-points of the intervals.}
+\item{\code{spr}:}{A matrix of real numbers saved as a \code{matrix}
+object specifying the spreads of the intervals.}
+}
 }
 
 \examples{
@@ -18,14 +22,12 @@ showClass("IntervalMatrix")
 showMethods(classes = "IntervalMatrix")
 }
 \seealso{
-Other IntervalMatrix-method: 
-\code{\link{IntervalMatrix}},
-\code{\link{apply}()},
-\code{\link{ivd2likert}()},
-\code{\link{ivd2vas}()},
-\code{\link{show}()}
+Objects of \code{IntervalMatrix} class should be created through
+\code{\link{IntervalMatrix}()} function. Besides \code{IntervalMatrix} class,
+the \pkg{IntervalQuestionStat} package also incorporates
+\code{\link{IntervalData-class}} and \code{\link{IntervalList-class}}
+for dealing with interval-valued data in R environment.
 }
 \author{
-Jose Garcia Garcia \email{garciagarjose@uniovi.es}
+José García-García \email{garciagarjose@uniovi.es}
 }
-\concept{IntervalMatrix-method}

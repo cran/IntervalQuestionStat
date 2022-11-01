@@ -1,32 +1,43 @@
 
-## This file is part of the IntervalQuestionStat package
+## This file is part of the IntervalQuestionStat package for R
 
 #' @title
-#' Convert an object to \code{IntervalData} class
+#' Convert a real number into a degenerate interval
 #'
 #' @description
-#' This function coerce a real number to an object of \code{IntervalData} class.
+#' This function allows to coerce a real number stored as a single
+#' \code{numeric} object to a degenerate interval formed only by this real
+#' number saved as an \code{IntervalData} instance.
+#' 
+#' @details 
+#' Single real numbers could be seen as particular cases of interval-valued
+#' data where each interval's lower and upper bounds are equal or,
+#' alternatively, its spread is zero.
 #'
 #' @usage
 #' \S4method{as.IntervalData}{numeric}(object)
 #'
-#' @param object a single real number.
+#' @param object A single real number stored as a single \code{numeric} object.
 #' 
-#' @return Returns an object of class \code{\linkS4class{IntervalData}}.
-#'
+#' @return
+#' This function returns a degenerate interval saved as an object
+#' of class \code{IntervalData}.
 #'
 #' @name as.IntervalData
 #' @docType methods
 #' @rdname as.IntervalData
-#' @family IntervalData-method
-#' @family conversion
 #' @aliases as.IntervalData,numeric-method
 #' @exportMethod as.IntervalData
 #' 
-#' @author Jose Garcia Garcia \email{garciagarjose@@uniovi.es}
+#' @author José García-García \email{garciagarjose@@uniovi.es}
+#' 
+#' @seealso 
+#' Other coercion function is \code{\link{as.IntervalList}()}.
 #' 
 #' @examples
-#' as.IntervalData(1)
+#' ## Transform a single real-valued number into an interval
+#' ## In particular, degenerate interval {1} is defined.
+#' i <- as.IntervalData(1); i
 
 setGeneric("as.IntervalData",
            function(object) standardGeneric("as.IntervalData"))
@@ -35,6 +46,9 @@ setMethod(f = "as.IntervalData",
           signature(object = "numeric"),
           definition = function(object)
           {
+            if(! is_single_real_number(object))
+              stop("'object'argument should be a single real number")
+            
             IntervalData(object, 0, type = 2)
           }
 )

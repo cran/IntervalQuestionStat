@@ -4,48 +4,48 @@
 \name{distance}
 \alias{distance}
 \alias{distance,IntervalData,IntervalData-method}
-\title{Calculate the \eqn{\theta}-distance between two interval-valued data}
+\title{Calculate the \eqn{\theta}-distance between two intervals}
 \usage{
 \S4method{distance}{IntervalData,IntervalData}(e1, e2, theta = 1)
 }
 \arguments{
-\item{e1}{an interval-valued data.}
+\item{e1}{A single interval stored as an \code{IntervalData} object.}
 
-\item{e2}{an interval-valued data.}
+\item{e2}{A single interval stored as an \code{IntervalData} object.}
 
-\item{theta}{a single positive numeric value. By default \code{theta}=1.}
+\item{theta}{A single positive real number stored as a unique \code{numeric}
+value which is used for distance computations. By default,
+\code{theta = 1}.}
 }
 \value{
-Returns the calculated \eqn{\theta}-distance, i.e. a single numeric value.
+This function returns the calculated \eqn{\theta}-distance between the
+two given intervals, which is defined as a single real number. Therefore,
+the output of this function is a single \code{numeric} value.
 }
 \description{
-The \eqn{\theta}-distance for two given interval-valued data \eqn{A} and \eqn{B}  was defined by Gil et al. (2002) as follows,
-\deqn{d_{\theta}(A,B) = \sqrt{(\mathrm{mid}~A - \mathrm{mid}~B)^2+\theta\cdot(\mathrm{spr}~A -\mathrm{spr}~B)^2},}
+This function calculates the \eqn{\theta}-distance
+between any two nonempty compact real intervals.
+}
+\details{
+The \eqn{\theta}-distance between any two given nonempty compact real
+intervals, \eqn{A} and \eqn{B},  was defined by Gil \emph{et al}. (2002)
+as the non-negative real number calculated as follows,
+\deqn{d_{\theta}(A,B) = \sqrt{(\mathrm{mid}~A - \mathrm{mid}~B)^2 +
+\theta\cdot(\mathrm{spr}~A -\mathrm{spr}~B)^2},}
 where \eqn{\theta} is a positive real number.
 }
 \examples{
+## Some distance() examples
 i1 <- IntervalData(0, 1)
 i2 <- IntervalData(3, 7)
-distance(i1, i2)
-distance(i1, i2, 1/3)
+distance(i1, i2)      ## rho2 distance
+distance(i1, i2, 1/3) ## Bertoluzza's distance with Lebesgue measure
 }
 \references{
-Gil, M.A.; Lubiano, M.A.; Montenegro, M.; Lopez, M.T. (2002).
-Least squares fitting of an affine function and strength of association for interval-valued data.
-Metrika 56:97-111.
-}
-\seealso{
-Other IntervalData-method: 
-\code{\link{IntervalData-class}},
-\code{\link{IntervalData}},
-\code{\link{arithmetic}},
-\code{\link{as.IntervalData}()},
-\code{\link{ivd2likert}()},
-\code{\link{ivd2vas}()},
-\code{\link{plot}()},
-\code{\link{show}()}
+Gil, M.Á.; Lubiano, M.A.; Montenegro, M.; López, M.T. (2002).
+Least squares fitting of an affine function and strength of association for
+interval-valued data. \emph{Metrika}, 56:97-111. \doi{10.1007/s001840100160}.
 }
 \author{
-Jose Garcia Garcia \email{garciagarjose@uniovi.es}
+José García-García \email{garciagarjose@uniovi.es}
 }
-\concept{IntervalData-method}

@@ -4,39 +4,30 @@
 \name{as.IntervalList}
 \alias{as.IntervalList}
 \alias{as.IntervalList,IntervalData-method}
-\title{Convert an object to \code{IntervalList} class}
+\title{Convert a single interval to a list of intervals}
 \usage{
 \S4method{as.IntervalList}{IntervalData}(object)
 }
 \arguments{
-\item{object}{an interval-valued data.}
+\item{object}{A single interval stored as an \code{IntervalData} object.}
 }
 \value{
-Returns an object of class \code{\linkS4class{IntervalList}}.
+This function returns the interval coerced to a list of intervals
+stored as an \code{IntervalList} object.
 }
 \description{
-This function coerce an object of \code{IntervalData} to an object of \code{IntervalList} class.
+This function allows to coerce a single interval saved as an
+\code{IntervalData} object to a degenerated list of intervals composed only
+of this interval and stored as an \code{IntervalList} instance.
 }
 \examples{
+## Convert a single interval into a list of intervals with a single interval
+## In particular, degenerate interval list {[0, 1]} = {[1 -+ 1]} is defined.
 as.IntervalList(IntervalData(0, 1))
 }
 \seealso{
-Other IntervalList-method: 
-\code{\link{IntervalList-class}},
-\code{\link{IntervalList}},
-\code{\link{cov}()},
-\code{\link{ivd2likert}()},
-\code{\link{ivd2vas}()},
-\code{\link{mean}()},
-\code{\link{plot}()},
-\code{\link{sum}()},
-\code{\link{var}()}
-
-Other conversion: 
-\code{\link{as.IntervalData}()}
+Other coercion function is \code{\link{as.IntervalData}()}.
 }
 \author{
-Jose Garcia Garcia \email{garciagarjose@uniovi.es}
+José García-García \email{garciagarjose@uniovi.es}
 }
-\concept{IntervalList-method}
-\concept{conversion}

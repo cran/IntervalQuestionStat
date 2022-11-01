@@ -4,21 +4,34 @@
 \name{show}
 \alias{show}
 \alias{show,IntervalData-method}
+\alias{show,IntervalList-method}
 \alias{show,IntervalMatrix-method}
 \title{Print basic information of interval-valued data}
 \usage{
 \S4method{show}{IntervalData}(object)
 
+\S4method{show}{IntervalList}(object)
+
 \S4method{show}{IntervalMatrix}(object)
 }
 \arguments{
-\item{object}{an object of class \code{IntervalData} or \code{IntervalMatrix}.}
+\item{object}{A single interval, a list of intervals or a matrix with several
+intervals stored as an \code{IntervalData},
+\code{IntervalList}, or \code{IntervalMatrix} object.}
 }
 \value{
-The object's inf/sup and mid/spr characterisations.
+This function does not return any value. It only prints the interval-valued
+object's information.
 }
 \description{
-Print inf/sup and mid/spr characterisations of a given interval-valued data.
+This function allows to print in the console
+basic information of interval-valued data.
+}
+\details{
+For \code{IntervalData} and \code{IntervalList} objects, both \emph{inf/sup}
+and \emph{mid/spr} characterizations of the intervals are printed, and
+for \code{IntervalMatrix} instances, the number of rows and
+columns is shown.
 }
 \examples{
 ## Show an interval-valued data
@@ -30,29 +43,9 @@ list <- IntervalList(c(0, 3, 2, 5, 6), c(4, 5, 4, 8, 7))
 show(list)
 
 ## Show an interval-valued data matrix
-m <- IntervalMatrix(matrix(c(0, 2, 0, 4, 1, 3, 3, 9), 2, 4, byrow = TRUE))
+m <- IntervalMatrix(matrix(c(0, 1, 2, 3, 0, 3, 4, 9), 2, 4))
 show(m)
 }
-\seealso{
-Other IntervalData-method: 
-\code{\link{IntervalData-class}},
-\code{\link{IntervalData}},
-\code{\link{arithmetic}},
-\code{\link{as.IntervalData}()},
-\code{\link{distance}()},
-\code{\link{ivd2likert}()},
-\code{\link{ivd2vas}()},
-\code{\link{plot}()}
-
-Other IntervalMatrix-method: 
-\code{\link{IntervalMatrix-class}},
-\code{\link{IntervalMatrix}},
-\code{\link{apply}()},
-\code{\link{ivd2likert}()},
-\code{\link{ivd2vas}()}
-}
 \author{
-Jose Garcia Garcia \email{garciagarjose@uniovi.es}
+José García-García \email{garciagarjose@uniovi.es}
 }
-\concept{IntervalData-method}
-\concept{IntervalMatrix-method}

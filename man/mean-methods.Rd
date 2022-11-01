@@ -4,39 +4,45 @@
 \name{mean}
 \alias{mean}
 \alias{mean,IntervalList-method}
-\title{Calculate the sample Aumann mean of \eqn{n} interval-valued data}
+\title{Calculate the sample Aumann mean of a random interval}
 \usage{
 \S4method{mean}{IntervalList}(x)
 }
 \arguments{
-\item{x}{a list of interval-valued data.}
+\item{x}{A list of intervals, that is, an \code{IntervalList} object.}
 }
 \value{
-Returns the calculated sample Aumann mean of \eqn{n} interval-valued data, i.e., other interval-valued data.
+This function returns an \code{IntervalData} object with the calculated
+sample Aumann mean of the given \eqn{n} intervals, which is defined as
+another nonempty compact real interval.
 }
 \description{
-This function calculates the sample Aumann mean of \eqn{n} interval-valued data.
+This function calculates the sample Aumann mean of a single realization
+formed by \eqn{n} nonempty compact real intervals drawn from a random
+interval saved as an \code{IntervalList} object.
+}
+\details{
+Let \eqn{\mathcal{X}} be an interval-valued random set
+and let \eqn{\left(x_{1},x_{2},\ldots,x_{n}\right)} be a sample of \eqn{n}
+independent observations drawn from \eqn{\mathcal{X}}. Then, the sample
+Aumann mean (see Aumann, 1965) is defined as the following interval given by
+\deqn{\overline{x} = \frac{1}{n}\sum_{i=1}^{n} x_{i}.}
 }
 \examples{
-mean(IntervalList(c(1, 3), c(2, 5)))
+## Some mean() trivial examples
+list <- IntervalList(c(1, 3), c(2, 5))
+mean(list)
 }
 \references{
-Aumann, R.J. (1965). Integrals of set-valued functions. Journal of Mathematical Analysis
-and Applications, 12(1):1-12.
+Aumann, R.J. (1965). Integrals of set-valued functions.
+\emph{Journal of Mathematical Analysis and Applications}, 12(1):1-12.
+\doi{10.1016/0022-247X(65)90049-1}.
 }
 \seealso{
-Other IntervalList-method: 
-\code{\link{IntervalList-class}},
-\code{\link{IntervalList}},
-\code{\link{as.IntervalList}()},
-\code{\link{cov}()},
-\code{\link{ivd2likert}()},
-\code{\link{ivd2vas}()},
-\code{\link{plot}()},
-\code{\link{sum}()},
-\code{\link{var}()}
+Other sample dispersion and covariance measures such as sample Fréchet
+variance and sample covariance can be calculated through \code{\link{var}()}
+and \code{\link{cov}()} functions, respectively.
 }
 \author{
-Jose Garcia Garcia \email{garciagarjose@uniovi.es}
+José García-García \email{garciagarjose@uniovi.es}
 }
-\concept{IntervalList-method}

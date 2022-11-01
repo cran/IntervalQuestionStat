@@ -1,34 +1,48 @@
 
-## This file is part of the IntervalQuestionStat package
+## This file is part of the IntervalQuestionStat package for R
 
 #' @title
-#' Calculate the sum of \eqn{n} interval-valued data
+#' Calculate the sum of \eqn{n} intervals
 #'
 #' @description
-#' This function calculates the sum of \eqn{n} interval-valued data.
+#' This function calculates the sum of \eqn{n} nonempty compact real intervals.
+#' 
+#' @details
+#' This function generalizes the Minkowski's sum of two nonempty compact real
+#' intervals explained in \link{arithmetic} section and implemented through
+#' \code{+} operator's method for two \code{IntervalData} objects.
 #'
-#' @param x a list of interval-valued data.
+#' @param x A list of intervals stored as an \code{IntervalList} object.
 #'
-#' @return Returns the calculated sum of \eqn{n} interval-valued data, i.e., other interval-valued data.
+#' @return
+#' This function returns an \code{IntervalData} object with the calculated
+#' sum of the given \eqn{n} intervals, which is defined
+#' as another nonempty compact real interval.
+#' 
+#' @usage
+#' \S4method{sum}{IntervalList}(x)
 #'
 #' @exportMethod sum
 #' @docType methods
 #' @name sum
-#' @family IntervalList-method
 #' @rdname sum-methods
 #' @aliases sum,IntervalList-method
 #' 
-#' @usage
-#' \S4method{sum}{IntervalList}(x)
-#' 
 #' @references 
-#' Hankin, R.K.S. (2010). A step-by-step guide to writing a simple package that uses S4 methods:
-#' a "hello world" example. Technical Report. Auckland University of Technology.
+#' Hankin, R.K.S. (2010). A step-by-step guide to writing a simple package
+#' that uses S4 methods: a "hello world" example. Technical Report.
+#' Auckland University of Technology.
 #' 
-#' @author Jose Garcia Garcia \email{garciagarjose@@uniovi.es}
+#' @author José García-García \email{garciagarjose@@uniovi.es}
+#' 
+#' @seealso
+#' For further information of the interval arithmetic see \link{arithmetic}.
 #' 
 #' @examples
-#' sum(IntervalList(c(1, 3), c(2, 5)))
+#' ## The following code calculates the sum
+#' ## of a list with two different intervals
+#' list <- IntervalList(c(1, 3), c(2, 5))
+#' sum(list)
 
 setGeneric("sum",
            function(x, ..., na.rm = FALSE)
@@ -42,16 +56,16 @@ setGeneric("sum",
            group = "Summary"
 )
 
-.IntervalData.sum = function(x)
+.IntervalData.sum <- function(x)
 {
-  IntervalData(sum(sapply(x, slot, "mid")),
-               sum(sapply(x, slot, "spr")),
+  IntervalData(sum(x@mid),
+               sum(x@spr),
                type = 2)
 }
 
 setMethod(f = "Summary",
           signature(x = "IntervalList"),
-          definition = function(x, ..., na.rm=FALSE)
+          definition = function(x, ..., na.rm = FALSE)
           {
             switch(.Generic,
                    sum = .IntervalData.sum(x),

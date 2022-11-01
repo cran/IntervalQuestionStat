@@ -4,49 +4,61 @@
 \name{var}
 \alias{var}
 \alias{var,IntervalList-method}
-\title{Calculate the sample Frechet variance of \eqn{n} interval-valued data}
+\title{Calculate the sample Fréchet variance of a random interval}
 \usage{
 \S4method{var}{IntervalList}(x, theta = 1)
 }
 \arguments{
-\item{x}{a list of interval-valued data.}
+\item{x}{A list of intervals, that is, an \code{IntervalList} object.}
 
-\item{theta}{a single positive numeric value. By default, \code{theta}=1.}
+\item{theta}{A single positive real number saved as a \code{numeric} object.
+By default, \code{theta = 1}.}
 }
 \value{
-Returns the calculated sample Frechet variance of \eqn{n} interval-valued data, i.e., a real number.
+This function returns the calculated sample Fréchet variance of the given
+\eqn{n} interval, which is defined as a non-negative real number. Therefore,
+the output of this function is a single \code{numeric} object.
 }
 \description{
-This function calculates the sample Frechet variance of \eqn{n} interval-valued data.
+This function calculates the sample Fréchet variance of a single realization
+of \eqn{n} nonempty compact real intervals drawn from an interval-valued
+random set stored as an \code{IntervalList} object.
 }
 \details{
 Let \eqn{\mathcal{X}} be an interval-valued random set
 and let \eqn{\left(x_{1},x_{2},\ldots,x_{n}\right)} be a sample of \eqn{n}
-independent observations drawn from \eqn{\mathcal{X}}.Then, the sample Frechet variance is defined as follows,
-\deqn{s_{\mathcal{X}}^{2}=\frac{1}{n}\sum_{i=1}^{n}d_{\theta}^{2}\left(x_{i}, \overline{x}\right)} where \eqn{\theta>0} and
-\eqn{\overline{x}} denotes the sample Aumann mean of \eqn{\left(x_{1},x_{2},\ldots,x_{n}\right)}.
+independent observations drawn from \eqn{\mathcal{X}}. Then, the sample
+Fréchet variance (see Fréchet, 1948) is defined as the following
+non-negative real number given by
+\deqn{s_{\mathcal{X}}^{2} =
+\frac{1}{n}\sum_{i=1}^{n}d_{\theta}^{2}\left(x_{i}, \overline{x}\right),}
+where \eqn{\theta>0} and \eqn{\overline{x}} denotes the sample Aumann mean
+of \eqn{\left(x_{1},x_{2},\ldots,x_{n}\right)}. Due to \eqn{\theta}-distance
+definition, this deviation measure can also be computed as follows,
+\deqn{s_{\mathcal{X}}^{2} =
+s_{\mathrm{mid}~\mathcal{X}}^{2}+\theta\cdot
+s_{\mathrm{spr}~\mathcal{X}}^{2},}
+where
+\deqn{s_{\mathrm{mid}~\mathcal{X}} = \frac{1}{n}\sum_{i=1}^{n}
+(\mathrm{mid}~x_{i} - \mathrm{mid}~\overline{x})^{2},}
+\deqn{s_{\mathrm{spr}~\mathcal{X}} = \frac{1}{n}\sum_{i=1}^{n}
+(\mathrm{spr}~x_{i} - \mathrm{spr}~\overline{x})^{2}.}
 }
 \examples{
-var(IntervalList(c(1, 3), c(2, 5)))
-var(IntervalList(c(1, 3), c(2, 5)), 1/3)
+## Some var() examples
+list <- IntervalList(c(1, 3), c(2, 5))
+var(list)
+var(list, theta = 1/3)
 }
 \references{
-Frechet, M. (1948). Les elements aleatoires de nature quelconque dans un espace distancie.
-Annales de l'institut Henri Poincare, 10(4):215-310.
+Fréchet, M. (1948). Les éléments aléatoires de nature quelconque dans un
+espace distancié. \emph{Annales de l'institut Henri Poincaré}, 10(4):215-310.
 }
 \seealso{
-Other IntervalList-method: 
-\code{\link{IntervalList-class}},
-\code{\link{IntervalList}},
-\code{\link{as.IntervalList}()},
-\code{\link{cov}()},
-\code{\link{ivd2likert}()},
-\code{\link{ivd2vas}()},
-\code{\link{mean}()},
-\code{\link{plot}()},
-\code{\link{sum}()}
+Other sample central tendency and covariance measures such as sample
+Aumann mean and sample covariance can be calculated through
+\code{\link{mean}()} and \code{\link{cov}()} functions, respectively.
 }
 \author{
-Jose Garcia Garcia \email{garciagarjose@uniovi.es}
+José García-García \email{garciagarjose@uniovi.es}
 }
-\concept{IntervalList-method}

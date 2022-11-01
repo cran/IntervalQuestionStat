@@ -1,32 +1,55 @@
 
-## This file is part of the IntervalQuestionStat package
+## This file is part of the IntervalQuestionStat package for R
 
 #' @title
-#' Plot an interval-valued data or a list of interval-valued data
+#' Plot a single interval or a list of intervals
 #'
 #' @description
 #' S4 methods for function plot.
-#' As in the generic plot S3 `graphics' method, these methods plot interval-valued data contained
-#' in \code{IntervalData} and \code{IntervalList} objects.
+#' As in the generic plot S3 `graphics' method,
+#' these methods plot interval-valued data contained in
+#' both \code{IntervalData} and \code{IntervalList} objects.
 #'
 #' @usage
-#' \S4method{plot}{IntervalData,missing}(x, y, layout = c("vertical","horizontal"), bounds = FALSE, mid = FALSE, \dots)
+#' \S4method{plot}{IntervalData,missing}(x, y,
+#'      layout = c("vertical", "horizontal"),
+#'      bounds = FALSE, mid = FALSE,
+#'      \dots)
+#' 
 #' \S4method{plot}{IntervalData,IntervalData}(x, y, bounds = FALSE, \dots)
-#' \S4method{plot}{IntervalList,missing}(x, y, layout = c("vertical","horizontal"), bounds = FALSE, mid = FALSE, \dots)
+#' 
+#' \S4method{plot}{IntervalList,missing}(x, y,
+#'      layout = c("vertical", "horizontal"),
+#'      bounds = FALSE, mid = FALSE,
+#'      \dots)
+#' 
 #' \S4method{plot}{IntervalList,IntervalList}(x, y, bounds = FALSE, \dots)
 #'
-#' @param x an object of type \code{IntervalData} or \code{IntervalList} representing the values of an interval-value variable.
-#' @param y an object of type \code{IntervalData} or \code{IntervalList} representing the values of a second interval-value variable, to be displayed along y (vertical) coordinates.
-#' @param layout the axes along which the interval-valued variables be displayed. Alternatives are "vertical" (default) and "horizontal".
-#' @param bounds a logical value indicating if interval bounds should be plotted or not (default).
-#' @param mid a logical value indicating if the interval mid-points should be plotted or not (default).
-#' @param \dots graphical arguments to be passed to methods.
+#' @param x A single interval or a unique list with several intervals stored
+#'          as an \code{IntervalData} object or as an \code{IntervalList},
+#'          instance respectively.
+#' @param y A single interval or a unique list with several intervals stored
+#'          as an \code{IntervalData} object or as an \code{IntervalList},
+#'          instance respectively.
+#' @param layout The axes along which the intervals should be displayed.
+#'               Only two alternatives are allowed: \code{vertical} (default)
+#'               and \code{horizontal}.
+#' @param bounds A single \code{logical} value indicating whether the extremes
+#'               of the given intervals should be plotted or not (default).
+#' @param mid A single \code{logical} value indicating whether the mid-points
+#'            of the given intervals should be plotted or not (default).
+#' @param \dots Other graphical parameters.
+#' 
+#' @details
+#' Note that in order to get bidimensional plots with interval-valued data,
+#' \code{x} and \code{y} arguments must be of the same class, that is, either
+#' both are \code{IntervalData} objects or either both are \code{IntervalList}
+#' instances. Moreover, in the second case both lists must have the same number
+#' of intervals.
 #'
 #' @exportMethod plot
 #' @docType methods
 #' @name plot
-#' @family IntervalData-method
-#' @family IntervalList-method
 #'
 #' @rdname plot-methods
 #'
@@ -38,35 +61,50 @@
 #' @return
 #' This function does not return any value. It only plots interval-valued data.
 #'
-#' @author Jose Garcia Garcia \email{garciagarjose@@uniovi.es}
+#' @author José García-García \email{garciagarjose@@uniovi.es}
 #'
 #' @examples
+#' ## Some trivial plot() examples for IntervalData objects
 #' i1 <- IntervalData(0, 1)
 #' i2 <- IntervalData(2, 3)
-#' plot(i1)
-#' plot(i1, bounds = TRUE, mid = TRUE)
-#' plot(i1, i2)
-#' plot(i1, i2, bounds = TRUE)
+#' plot(i1)                             ## Plot only an interval vertically
+#' plot(i1, layout = "horizontal")      ## Plot only an interval horizontally
+#' plot(i1, bounds = TRUE, mid = TRUE)  ## Add bounds and remark mid-point
+#' plot(i1, i2)                         ## Plot an interval on each axis 
+#' plot(i1, i2, bounds = TRUE)          ## Add bounds
 #'
+#' ## Some trivial plot() examples for IntervalList objects
 #' list1 <- IntervalList(c(0, 3, 2, 5, 6), c(4, 5, 4, 8, 7))
 #' list2 <- IntervalList(c(3, 0, 3, 1, 4), c(7, 4, 6, 2, 6))
-#' plot(list1)
-#' plot(list1, layout = "horizontal")
-#' plot(list1, bounds = TRUE, mid = TRUE)
-#' plot(list1, list2)
-#' plot(list1, list2, bounds = TRUE)
+#' plot(list1)                            ## Plot an interval list vertically
+#' plot(list1, layout = "horizontal")     ## Plot an interval list horizontally
+#' plot(list1, bounds = TRUE, mid = TRUE) ## Add bounds and remark mid-points
+#' plot(list1, list2)                     ## Plot an interval list on each axis 
+#' plot(list1, list2, bounds = TRUE)      ## Add bounds
 #'
-#' ## Extra arguments
-#' plot(list1, list2, bounds = TRUE, main = "My interval-valued data plot", col = "blue", lwd = 2)
+#' ## Further plot() customizations
+#' plot(list1, bounds = TRUE, mid = TRUE,
+#'      main = "My one-dimensional interval-valued plot",
+#'      col = c("blue", "red"), lwd = 2)
+#' plot(list1, list2, bounds = TRUE,
+#'      main = "My bidimensional interval-valued plot",
+#'      col = "blue", lwd = 2)
 
 if (!isGeneric("plot"))
   setGeneric("plot", function(x, y, ...) standardGeneric("plot"))
 
 setMethod("plot",
           signature(x = "IntervalList", y = "missing"),
-          function(x, y, layout = c("vertical","horizontal"), bounds = FALSE, mid = FALSE,  ...)
+          function(x, y, layout = c("vertical","horizontal"),
+                   bounds = FALSE, mid = FALSE,  ...)
           {
-            dotarguments <- match.call(expand.dots = FALSE)$...
+            if (length(bounds) != 1 || ! is.logical(bounds))
+              stop("'bounds' argument should be a single logical object")
+            
+            if (length(mid) != 1 || ! is.logical(mid))
+              stop("'mid' argument should be a single logical object")
+            
+            dotarguments <- list(...)
 
             if (is.null(dotarguments$main))
             {
@@ -86,23 +124,23 @@ setMethod("plot",
               else dotarguments$xlab <- ""
             }
 
-            midpoints <- sapply(x, slot, "mid")
-            spreads <- sapply(x, slot, "spr")
-            infs <- midpoints - spreads
-            sups <- midpoints + spreads
-            xcord <- 1:length(x)
+            infs <- x@mid - x@spr
+            sups <- x@mid + x@spr
+            xcord <- seq_len(length(x))
 
             if (is.null(dotarguments$ylim) && layout == "vertical")
             {
               miny <- min(infs)
               maxy <- max(sups)
-              dotarguments$ylim <- c(miny-0.05*(maxy-miny), maxy+0.05*(maxy-miny))
+              dotarguments$ylim <- c(miny - 0.05 * (maxy - miny),
+                                     maxy + 0.05 * (maxy - miny))
             }
             if (is.null(dotarguments$xlim) && layout == "horizontal")
             {
               minx <- min(infs)
               maxx <- max(sups)
-              dotarguments$xlim <- c(minx-0.05*(maxx-minx), maxx+0.05*(maxx-minx))
+              dotarguments$xlim <- c(minx - 0.05 * (maxx - minx),
+                                     maxx + 0.05 * (maxx - minx))
             }
 
             if (is.null(dotarguments$col))
@@ -115,35 +153,42 @@ setMethod("plot",
             if (layout == "vertical")
             {
               do.call("plot.default",
-                      c(list(x = obsnumber, y = rep(0., length(obsnumber)), type = "n"), dotarguments))
+                      c(list(x = obsnumber, y = rep(0, length(obsnumber)),
+                             type = "n"), dotarguments))
               if (bounds == FALSE)
               {
                 do.call("segments",
-                        c(list(x0 = xcord, y0 = infs, x1 = xcord, y1 = sups), dotarguments))
+                        c(list(x0 = xcord, y0 = infs, x1 = xcord, y1 = sups),
+                          dotarguments))
               } else {
                 do.call("arrows",
-                        c(list(x0 = xcord, y0 = infs, x1 = xcord, y1 = sups), length = 0.05, angle = 90, code = 3, dotarguments))
+                        c(list(x0 = xcord, y0 = infs, x1 = xcord, y1 = sups),
+                          length = 0.05, angle = 90, code = 3, dotarguments))
               }
               if (mid == TRUE)
               {
-                points(xcord, midpoints, pch = 16, col = dotarguments$col)
+                points(xcord, x@mid, pch = 16, col = dotarguments$col)
               }
             }
             else if (layout == "horizontal")
             {
-              do.call("plot.default", c(list(x = rep(0., length(obsnumber)), y = obsnumber, type = "n"), dotarguments))
+              do.call("plot.default", c(list(x = rep(0, length(obsnumber)),
+                                             y = obsnumber, type = "n"),
+                                        dotarguments))
               if (bounds == FALSE)
               {
                 do.call("segments",
-                        c(list(y0 = xcord, x0 = infs, y1 = xcord, x1 = sups), dotarguments))
+                        c(list(y0 = xcord, x0 = infs, y1 = xcord, x1 = sups),
+                          dotarguments))
               } else {
                 do.call("arrows",
-                        c(list(y0 = xcord, x0 = infs, y1 = xcord, x1 = sups), length = 0.05, angle = 90, code = 3, dotarguments))
+                        c(list(y0 = xcord, x0 = infs, y1 = xcord, x1 = sups),
+                          length = 0.05, angle = 90, code = 3, dotarguments))
               }
 
               if (mid == TRUE)
               {
-                points(midpoints, xcord, pch = 16, col = dotarguments$col)
+                points(x@mid, xcord, pch = 16, col = dotarguments$col)
               }
             }
           }
@@ -153,9 +198,13 @@ setMethod("plot",
           signature(x = "IntervalList", y = "IntervalList"),
           function(x, y, bounds = FALSE, ...)
           {
-            if (length(x) != length(y)) stop("'x' and 'y' arguments must be of the same length")
+            if (length(x) != length(y))
+              stop("'x' and 'y' arguments should be of the same length")
+            
+            if (length(bounds) != 1 || ! is.logical(bounds))
+              stop("'bounds' argument should be a logical object")
 
-            dotarguments <- match.call(expand.dots=FALSE)$...
+            dotarguments <- list(...)
 
             if (is.null(dotarguments$main))
             {
@@ -170,27 +219,24 @@ setMethod("plot",
               dotarguments$ylab <- "Second interval-valued data list"
             }
 
-
-            midpointsx <- sapply(x, slot, "mid")
-            spreadsx <- sapply(x, slot, "spr")
-            infsx <- midpointsx - spreadsx
-            supsx <- midpointsx + spreadsx
-            midpointsy <- sapply(y, slot, "mid")
-            spreadsy <- sapply(y, slot, "spr")
-            infsy <- midpointsy - spreadsy
-            supsy <- midpointsy + spreadsy
+            infsx <- x@mid - x@spr
+            supsx <- x@mid + x@spr
+            infsy <- y@mid - y@spr
+            supsy <- y@mid + y@spr
 
             if (is.null(dotarguments$xlim))
             {
               minx <- min(infsx)
               maxx <-max(supsx)
-              dotarguments$xlim <- c(minx-0.05*(maxx-minx), maxx+0.05*(maxx-minx))
+              dotarguments$xlim <- c(minx - 0.05 * (maxx - minx),
+                                     maxx + 0.05 * (maxx - minx))
             }
             if (is.null(dotarguments$ylim))
             {
               miny <- min(infsy)
               maxy <-max(supsy)
-              dotarguments$ylim <- c(miny-0.05*(maxy-miny), maxy+0.05*(maxy-miny))
+              dotarguments$ylim <- c(miny - 0.05 * (maxy - miny),
+                                     maxy + 0.05 * (maxy - miny))
             }
 
             if (is.null(dotarguments$col))
@@ -199,33 +245,44 @@ setMethod("plot",
             }
 
             do.call("plot.default",
-                    c(list(x = 0., y = 0., type = "n"), dotarguments))
+                    c(list(x = 0, y = 0, type = "n"), dotarguments))
 
             if (bounds == FALSE)
             {
               do.call("segments",
-                      c(list(x0 = infsx, y0 = midpointsy, x1 = supsx, y1 = midpointsy), dotarguments))
+                      c(list(x0 = infsx, y0 = y@mid,
+                             x1 = supsx, y1 = y@mid), dotarguments))
               do.call("segments",
-                      c(list(x0 = midpointsx, y0 = infsy, x1 = midpointsx, y1 = supsy), dotarguments))
+                      c(list(x0 = x@mid, y0 = infsy,
+                             x1 = x@mid, y1 = supsy), dotarguments))
             } else {
               do.call("arrows",
-                      c(list(x0 = infsx, y0 = midpointsy, x1 = supsx, y1 = midpointsy), length = 0.05, angle = 90, code = 3, dotarguments))
+                      c(list(x0 = infsx, y0 = y@mid,
+                             x1 = supsx, y1 = y@mid),
+                        length = 0.05, angle = 90, code = 3, dotarguments))
               do.call("arrows",
-                      c(list(x0 = midpointsx, y0 = infsy, x1 = midpointsx, y1 = supsy), length = 0.05, angle = 90, code = 3, dotarguments))
+                      c(list(x0 = x@mid, y0 = infsy,
+                             x1 = x@mid, y1 = supsy),
+                        length = 0.05, angle = 90, code = 3, dotarguments))
             }
 
-            points(midpointsx, midpointsy, pch = 16, col = dotarguments$col)
+            points(x@mid, y@mid, pch = 16, col = dotarguments$col)
 
           }
 )
 
 setMethod("plot",
           signature(x = "IntervalData", y = "missing"),
-          function(x, y, layout = c("vertical","horizontal"), bounds = FALSE, mid = FALSE, ...)
+          function(x, y, layout = c("vertical","horizontal"),
+                   bounds = FALSE, mid = FALSE, ...)
           {
             switch(layout[1],
-                   vertical = plot(as.IntervalList(x), layout = layout, bounds = bounds, mid = mid, xaxt = "n", xlab = "Observation", ...),
-                   horizontal = plot(as.IntervalList(x), layout = layout, bounds = bounds, mid = mid, yaxt = "n", ylab = "Observation", ...))
+                   vertical = plot(as.IntervalList(x), layout = layout,
+                                   bounds = bounds, mid = mid, xaxt = "n",
+                                   xlab = "Observation", ...),
+                   horizontal = plot(as.IntervalList(x), layout = layout,
+                                     bounds = bounds, mid = mid, yaxt = "n",
+                                     ylab = "Observation", ...))
           }
 )
 
@@ -233,6 +290,7 @@ setMethod("plot",
           signature(x = "IntervalData", y = "IntervalData"),
           function(x, y, bounds = FALSE, ...)
           {
-            plot(as.IntervalList(x), as.IntervalList(y), bounds = bounds, xaxt = "n", yaxt = "n", xlab = "First observation", ylab = "Second observation", ...)
+            plot(as.IntervalList(x), as.IntervalList(y), bounds = bounds,
+                 xlab = "First observation", ylab = "Second observation", ...)
           }
 )
